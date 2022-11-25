@@ -12,6 +12,9 @@ module "eip_deploy" {
 }
 
 module "aci_infra" {
+  depends_on = [
+    module.eip_deploy
+  ]
   source               = "./modules/aci_infra"
   aci_password         = var.aci_password
   aci_url              = var.aci_url
@@ -20,4 +23,21 @@ module "aci_infra" {
   aci_vlan_pool_ranges = var.aci_vlan_pool_ranges
 
 
+}
+
+module "aci_tenant" {
+  depends_on = [
+    module.aci_infra
+  ]
+
+  source = "./modules/aci_tenant"
+
+  aci_password   = var.aci_password
+  aci_url        = var.aci_url
+  aci_username   = var.aci_username
+  bridge_domains = var.bridge_domains
+  tenants        = var.tenants
+  vrfs           = var.vrfs
+  subnets = module.eip_deploy.subnets
+  l3outs = module.aci_infra.l3outs
 }

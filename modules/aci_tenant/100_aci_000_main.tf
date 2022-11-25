@@ -1,3 +1,4 @@
+
 terraform {
   required_providers {
     aci = {
@@ -6,13 +7,10 @@ terraform {
 
   }
 }
-
-
-
-
 locals {
   description = "BMaaS Demo"
 }
+
 variable "aci_username" {
   description = "EIP Username"
 }
@@ -25,10 +23,26 @@ variable "aci_url" {
   description = "EIP URL"
 }
 
-variable "aci_vlan_pools" {
-  description = "aci_vlan_pools"
+variable "tenants" {
+  description = "ACI tenants"
 }
 
-variable "aci_vlan_pool_ranges" {
-  description = "aci_vlan_pool_ranges"
+variable "vrfs" {
+  description = "ACI VRFs"
 }
+
+variable "bridge_domains" {
+  description = "ACI BDs"
+}
+
+variable "subnets" {
+  description = "subnets"
+}
+
+variable "l3outs" {
+  description = "l3outs"
+}
+
+
+
+

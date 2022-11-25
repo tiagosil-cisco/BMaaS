@@ -26,6 +26,6 @@ variable "eip_url" {
   description = "EIP URL"
 }
 
-variable "bridge_domains"  {
-    description = "bridge_domains"
+variable "bridge_domains" {
+  description = "bridge_domains"
 }

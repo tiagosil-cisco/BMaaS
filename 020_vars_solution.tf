@@ -22,8 +22,8 @@ variable "aci_vlan_pool_ranges" {
   type = map(any)
   default = {
     range1 = {
-      from        = "vlan-1000"
-      to          = "vlan-1010"
+      from        = "vlan-1021"
+      to          = "vlan-1030"
       description = "Pool to CORE for L3Outs"
       alloc_mode  = "inherit"
       role        = "external"
@@ -40,6 +40,27 @@ variable "aci_vlan_pool_ranges" {
   }
 }
 
+variable "tenants" {
+  type = map(any)
+  default = {
+    BMaaS = {
+      name = "BMaaS"
+    }
+
+  }
+}
+
+
+variable "vrfs" {
+  type = map(any)
+  default = {
+    BMaaS = {
+      name   = "BMaaS"
+      tenant = "BMaaS"
+    }
+  }
+}
+
 variable "bridge_domains" {
   type = map(any)
   default = {
@@ -51,7 +72,7 @@ variable "bridge_domains" {
       vrf                 = "BMaaS"
       arp_flood           = "no"
       ip_learning         = "yes"
-      unicast_route       = "true"
+      unicast_route       = "yes"
       subnet_scope        = ["public", "shared"]
       prefered            = "yes"
       vmm_domain          = "DOVETAIL_VMM"
@@ -64,8 +85,8 @@ variable "bridge_domains" {
       vrf                 = "BMaaS"
       arp_flood           = "no"
       ip_learning         = "yes"
-      unicast_route       = "true"
-      subnet_scope        = ["public", "shared"]
+      unicast_route       = "yes"
+      subnet_scope        = ["public"]
       prefered            = "yes"
       vmm_domain          = "DOVETAIL_VMM"
     },
@@ -73,3 +94,4 @@ variable "bridge_domains" {
 
   }
 }
+
