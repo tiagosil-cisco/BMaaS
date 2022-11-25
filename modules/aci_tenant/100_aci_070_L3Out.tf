@@ -1,5 +1,4 @@
 
-
 resource "aci_l3_outside" "BMaaS-L3OUT-BGP" {
   tenant_dn              = aci_tenant.tenants["BMaaS"].id
   name                   = "BMaaS-L3OUT-BGP"
@@ -76,71 +75,28 @@ resource "aci_l3out_path_attachment" "L3OUT_Path_Attachment" {
 resource "aci_l3out_vpc_member" "L3OUT_SVI_A" {
   leaf_port_dn  = aci_l3out_path_attachment.L3OUT_Path_Attachment.id
   side  = "A"
-  addr  = "10.0.0.1/16"
-  annotation  = "example"
-  ipv6_dad = "enabled"
-  ll_addr  = "::"
-  description = "from terraform"
-  name_alias  = "example"
+  addr  = join("/",[cidrhost(var.l3out_subnet.prefix,1),var.l3out_subnet.prefix_size])
+}
+resource "aci_l3out_vpc_member" "L3OUT_SVI_B" {
+  leaf_port_dn  = aci_l3out_path_attachment.L3OUT_Path_Attachment.id
+  side  = "B"
+  addr  = join("/",[cidrhost(var.l3out_subnet.prefix,2),var.l3out_subnet.prefix_size])
 }
 
-/*
-resource "aci_l3out_floating_svi" "SVI_FLOATING_LEAF103" {
-  logical_interface_profile_dn = aci_logical_interface_profile.COMPANY01-logical_interface_profile.id
-  node_dn                      = "topology/pod-1/node-103"
-  encap                        = "vlan-1400"
-  addr                         = "10.10.3.252/24"
-  autostate                    = "disabled"
-  encap_scope                  = "local"
-  if_inst_t                    = "ext-svi"
-  mode                         = "regular"
-  mtu                          = "1500"
-
-  relation_l3ext_rs_dyn_path_att {
-    tdn = data.aci_vmm_domain.aci_vmm_vds.id
-    floating_address = "10.10.3.254/24"
-    forged_transmit = "Enabled"
-    mac_change = "Enabled"
-    promiscuous_mode = "Enabled"
-  }
-}
-
-resource "aci_l3out_floating_svi" "SVI_FLOATING_LEAF104" {
-  logical_interface_profile_dn = aci_logical_interface_profile.COMPANY01-logical_interface_profile.id
-  node_dn                      = "topology/pod-1/node-104"
-  encap                        = "vlan-1400"
-  addr                         = "10.10.3.253/24"
-  autostate                    = "disabled"
-  encap_scope                  = "local"
-  if_inst_t                    = "ext-svi"
-  mode                         = "regular"
-  mtu                          = "1500"
-
-  relation_l3ext_rs_dyn_path_att {
-    tdn = data.aci_vmm_domain.aci_vmm_vds.id
-    floating_address = "10.10.3.254/24"
-    forged_transmit = "Enabled"
-    mac_change = "Enabled"
-    promiscuous_mode = "Enabled"
-  }
-}
-
-
-resource "aci_bgp_peer_connectivity_profile" "BGP-PEER-Leaf103" {
-  parent_dn           = aci_l3out_floating_svi.SVI_FLOATING_LEAF103.id
-  addr                = "10.10.3.1"
+resource "aci_bgp_peer_connectivity_profile" "BGP-PEER-CORE01" {
+  parent_dn           = aci_l3out_path_attachment.L3OUT_Path_Attachment.id
+  addr                = cidrhost(var.l3out_subnet.prefix,5)
   addr_t_ctrl         = ["af-ucast"]
-  as_number           = "65002"
-  local_asn           = "65003"
+  as_number           = "65001"
+  local_asn           = "65020"
   admin_state         = "enabled"
 }
 
-resource "aci_bgp_peer_connectivity_profile" "BGP-PEER-Leaf104" {
-  parent_dn           = aci_l3out_floating_svi.SVI_FLOATING_LEAF104.id
-  addr                = "10.10.3.1"
+resource "aci_bgp_peer_connectivity_profile" "BGP-PEER-CORE02" {
+  parent_dn           = aci_l3out_path_attachment.L3OUT_Path_Attachment.id
+  addr                = cidrhost(var.l3out_subnet.prefix,6)
   addr_t_ctrl         = ["af-ucast"]
-  as_number           = "65002"
-  local_asn           = "65003"
+  as_number           = "65001"
+  local_asn           = "65020"
   admin_state         = "enabled"
 }
-*/

@@ -21,6 +21,7 @@ module "aci_infra" {
   aci_username         = var.aci_username
   aci_vlan_pools       = var.aci_vlan_pools
   aci_vlan_pool_ranges = var.aci_vlan_pool_ranges
+  vlans_l3out = module.eip_deploy.vlans_l3out
 
 
 }

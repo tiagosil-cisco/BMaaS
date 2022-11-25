@@ -32,3 +32,7 @@ variable "aci_vlan_pools" {
 variable "aci_vlan_pool_ranges" {
   description = "aci_vlan_pool_ranges"
 }
+
+variable "vlans_l3out" {
+  description = "vlans_l3out"
+}
