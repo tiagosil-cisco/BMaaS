@@ -28,17 +28,17 @@ resource "aci_logical_node_profile" "BMaaS_node_profile" {
         name          = "BMaaS_node_profile"
   
 }
-/*
-resource "aci_l3out_bgp_protocol_profile" "COMPANY01-bgp_protocol_profile" {
-  logical_node_profile_dn  = aci_logical_node_profile.COMPANY01_node_profile.id
+
+resource "aci_l3out_bgp_protocol_profile" "BMaaS-bgp_protocol_profile" {
+  logical_node_profile_dn  = aci_logical_node_profile.BMaaS_node_profile.id
 }
 
-resource "aci_l3out_bgp_external_policy" "COMPANY01-bgp_ext_pol" {
-  l3_outside_dn = aci_l3_outside.L3OUT-COMPANY01-BGP.id
+resource "aci_l3out_bgp_external_policy" "BMaaS-bgp_ext_pol" {
+  l3_outside_dn = aci_l3_outside.BMaaS-L3OUT-BGP.id
 }
 
 resource "aci_logical_node_to_fabric_node" "Leaf103" {
-  logical_node_profile_dn  = aci_logical_node_profile.COMPANY01_node_profile.id
+  logical_node_profile_dn  = aci_logical_node_profile.BMaaS_node_profile.id
   tdn               = "topology/pod-1/node-103"
   annotation        = "annotation"
   config_issues     = "none"
@@ -47,7 +47,7 @@ resource "aci_logical_node_to_fabric_node" "Leaf103" {
 }
 
 resource "aci_logical_node_to_fabric_node" "Leaf104" {
-  logical_node_profile_dn  = aci_logical_node_profile.COMPANY01_node_profile.id
+  logical_node_profile_dn  = aci_logical_node_profile.BMaaS_node_profile.id
   tdn               = "topology/pod-1/node-104"
   annotation        = "annotation"
   config_issues     = "none"
@@ -55,13 +55,36 @@ resource "aci_logical_node_to_fabric_node" "Leaf104" {
   rtr_id_loop_back  = "yes"
 }
 
-resource "aci_logical_interface_profile" "COMPANY01-logical_interface_profile" {
-        logical_node_profile_dn = aci_logical_node_profile.COMPANY01_node_profile.id
+resource "aci_logical_interface_profile" "BMaaS-logical_interface_profile" {
+        logical_node_profile_dn = aci_logical_node_profile.BMaaS_node_profile.id
         description             = "Sample logical interface profile"
-        name                    = "L3OUT-to-FTDv"
+        name                    = "L3OUT-to-CORE"
   }
 
+resource "aci_l3out_path_attachment" "L3OUT_Path_Attachment" {
+  logical_interface_profile_dn  = aci_logical_interface_profile.BMaaS-logical_interface_profile.id
+  target_dn  = "topology/pod-1/protpaths-103-104/pathep-[OTT-CORE-VPC03]"
+  if_inst_t = "ext-svi"
+  description = "from terraform"
+  encap  = "vlan-${var.vlans_l3out.request_id}"
+  encap_scope = "local"
+  mode = "regular"
+  mtu = "inherit"
 
+}
+
+resource "aci_l3out_vpc_member" "L3OUT_SVI_A" {
+  leaf_port_dn  = aci_l3out_path_attachment.L3OUT_Path_Attachment.id
+  side  = "A"
+  addr  = "10.0.0.1/16"
+  annotation  = "example"
+  ipv6_dad = "enabled"
+  ll_addr  = "::"
+  description = "from terraform"
+  name_alias  = "example"
+}
+
+/*
 resource "aci_l3out_floating_svi" "SVI_FLOATING_LEAF103" {
   logical_interface_profile_dn = aci_logical_interface_profile.COMPANY01-logical_interface_profile.id
   node_dn                      = "topology/pod-1/node-103"

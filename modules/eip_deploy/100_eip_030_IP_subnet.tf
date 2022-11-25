@@ -16,8 +16,11 @@ resource "solidserver_ip_subnet" "BMaaS_L3OUT" {
   block       = solidserver_ip_subnet.ip_block.name
   terminal    = true
   name        = "BMaaS_L3OUT"
+
   prefix_size = 29
 }
+
+
 
 resource "solidserver_ip_subnet" "subnets" {
   for_each       = var.bridge_domains

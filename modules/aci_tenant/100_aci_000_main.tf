@@ -44,5 +44,14 @@ variable "l3outs" {
 }
 
 
+variable "vlans_l3out" {
+  description = "vlans_l3out"
+}
 
+variable "vlans_bridge_domains" {
+  description = "vlans_bridge_domains"
+}
 
+variable "l3out_subnet" {
+  description = "l3out_subnet"  
+}

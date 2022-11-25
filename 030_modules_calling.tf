@@ -40,4 +40,7 @@ module "aci_tenant" {
   vrfs           = var.vrfs
   subnets = module.eip_deploy.subnets
   l3outs = module.aci_infra.l3outs
+  vlans_l3out = module.eip_deploy.vlans_l3out
+  vlans_bridge_domains = module.eip_deploy.vlans_bridge_domains
+  l3out_subnet = module.eip_deploy.l3out_subnet
 }
