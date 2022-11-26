@@ -4,10 +4,29 @@ resource "aci_application_epg" "epgs" {
   application_profile_dn = aci_application_profile.BMaaS.id
   name                   = each.value.name
   relation_fv_rs_bd      = aci_bridge_domain.bridge_domains[each.value.name].id
-  relation_fv_rs_cons    = [aci_contract.Project01.id]
-  relation_fv_rs_prov    = [aci_contract.Project01.id]
 }
 
+resource "aci_epg_to_contract" "PROD_TO_L3OUT_prov" {
+  application_epg_dn = aci_application_epg.epgs[local.epg_cimc].id
+  contract_dn        = aci_contract.CIMC_TO_L3OUT.id
+  contract_type      = "provider"
+}
+resource "aci_epg_to_contract" "PROD_TO_L3OUT_cons" {
+  application_epg_dn = aci_application_epg.epgs[local.epg_cimc].id
+  contract_dn        = aci_contract.CIMC_TO_L3OUT.id
+  contract_type      = "consumer"
+}
+
+resource "aci_epg_to_contract" "CIMC_TO_L3OUT_prov" {
+  application_epg_dn = aci_application_epg.epgs[local.epg_prod].id
+  contract_dn        = aci_contract.PROD_TO_L3OUT.id
+  contract_type      = "provider"
+}
+resource "aci_epg_to_contract" "CIMC_TO_L3OUT_cons" {
+  application_epg_dn = aci_application_epg.epgs[local.epg_prod].id
+  contract_dn        = aci_contract.PROD_TO_L3OUT.id
+  contract_type      = "consumer"
+}
 
 resource "aci_epg_to_domain" "EPG_to_Pyisical_domain" {
   for_each           = var.bridge_domains

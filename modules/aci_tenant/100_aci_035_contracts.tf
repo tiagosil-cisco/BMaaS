@@ -23,15 +23,28 @@ resource "aci_contract_subject" "L3OUT_allow_all" {
   relation_vz_rs_subj_filt_att = [aci_filter.match_all.id]
 }
 
-resource "aci_contract" "Project01" {
+resource "aci_contract" "PROD_TO_L3OUT" {
   tenant_dn = aci_tenant.tenants["BMaaS"].id
-  name      = "Project01"
+  name      = "PROD_TO_L3OUT"
   scope     = "tenant"
 }
 
 
-resource "aci_contract_subject" "allow_all" {
-  contract_dn                  = aci_contract.Project01.id
+resource "aci_contract_subject" "PROD_allow_all" {
+  contract_dn                  = aci_contract.PROD_TO_L3OUT.id
+  name                         = "allow_all"
+  relation_vz_rs_subj_filt_att = [aci_filter.match_all.id]
+}
+
+resource "aci_contract" "CIMC_TO_L3OUT" {
+  tenant_dn = aci_tenant.tenants["BMaaS"].id
+  name      = "CIMC_TO_L3OUT"
+  scope     = "tenant"
+}
+
+
+resource "aci_contract_subject" "CIMC_allow_all" {
+  contract_dn                  = aci_contract.CIMC_TO_L3OUT.id
   name                         = "allow_all"
   relation_vz_rs_subj_filt_att = [aci_filter.match_all.id]
 }

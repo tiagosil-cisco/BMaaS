@@ -6,6 +6,7 @@ resource "aci_bridge_domain" "bridge_domains" {
   arp_flood          = each.value.arp_flood
   ip_learning        = each.value.ip_learning
   unicast_route      = each.value.unicast_route
+  relation_fv_rs_bd_to_out = [ aci_l3_outside.BMaaS-L3OUT-BGP.id ]
 }
 
 

@@ -77,6 +77,7 @@ variable "bridge_domains" {
       prefered            = "yes"
       vmm_domain          = "DOVETAIL_VMM"
       vlan_id             = "1012"
+      contract = "PROD_TO_L3OUT"
     },
     BMaaS_CIMC01 = {
       name                = "BMaaS_CIMC01"
@@ -91,6 +92,7 @@ variable "bridge_domains" {
       prefered            = "yes"
       vmm_domain          = "DOVETAIL_VMM"
       vlan_id             = "1011"
+      contract = "CIMC_TO_L3OUT"
     },
 
 

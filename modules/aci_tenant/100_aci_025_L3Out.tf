@@ -13,8 +13,8 @@ resource "aci_external_network_instance_profile" "BMaaS-external_network_instanc
   name                = "ExtEPG"
   match_t             = "All"
   pref_gr_memb        = "exclude"
-  relation_fv_rs_cons = [aci_contract.L3OUT.id]
-  relation_fv_rs_prov = [aci_contract.L3OUT.id]
+  relation_fv_rs_cons = [aci_contract.L3OUT.id,aci_contract.PROD_TO_L3OUT.id, aci_contract.CIMC_TO_L3OUT.id]
+  relation_fv_rs_prov = [aci_contract.L3OUT.id,aci_contract.PROD_TO_L3OUT.id, aci_contract.CIMC_TO_L3OUT.id]
 
 }
 
