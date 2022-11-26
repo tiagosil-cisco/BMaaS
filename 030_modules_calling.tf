@@ -21,7 +21,7 @@ module "aci_infra" {
   aci_username         = var.aci_username
   aci_vlan_pools       = var.aci_vlan_pools
   aci_vlan_pool_ranges = var.aci_vlan_pool_ranges
-  vlans_l3out = module.eip_deploy.vlans_l3out
+  vlans_l3out          = module.eip_deploy.vlans_l3out
 
 
 }
@@ -33,15 +33,18 @@ module "aci_tenant" {
 
   source = "./modules/aci_tenant"
 
-  aci_password   = var.aci_password
-  aci_url        = var.aci_url
-  aci_username   = var.aci_username
-  bridge_domains = var.bridge_domains
-  tenants        = var.tenants
-  vrfs           = var.vrfs
-  subnets = module.eip_deploy.subnets
-  l3outs = module.aci_infra.l3outs
-  vlans_l3out = module.eip_deploy.vlans_l3out
+  aci_password         = var.aci_password
+  aci_url              = var.aci_url
+  aci_username         = var.aci_username
+  bridge_domains       = var.bridge_domains
+  tenants              = var.tenants
+  vrfs                 = var.vrfs
+  subnets              = module.eip_deploy.subnets
+  l3outs               = module.aci_infra.l3outs
+  vlans_l3out          = module.eip_deploy.vlans_l3out
   vlans_bridge_domains = module.eip_deploy.vlans_bridge_domains
-  l3out_subnet = module.eip_deploy.l3out_subnet
+  l3out_subnet         = module.eip_deploy.l3out_subnet
+  physical_domain      = module.aci_infra.physical_domain
+  vpc_to_fi_a          = module.aci_infra.vpc_to_fi_a
+  vpc_to_fi_b          = module.aci_infra.vpc_to_fi_b
 }

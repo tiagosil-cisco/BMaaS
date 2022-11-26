@@ -76,7 +76,7 @@ variable "bridge_domains" {
       subnet_scope        = ["public", "shared"]
       prefered            = "yes"
       vmm_domain          = "DOVETAIL_VMM"
-      vlan_id = "1012"
+      vlan_id             = "1012"
     },
     BMaaS_CIMC01 = {
       name                = "BMaaS_CIMC01"
@@ -90,7 +90,7 @@ variable "bridge_domains" {
       subnet_scope        = ["public"]
       prefered            = "yes"
       vmm_domain          = "DOVETAIL_VMM"
-      vlan_id = "1011"
+      vlan_id             = "1011"
     },
 
 

@@ -5,7 +5,7 @@ resource "aci_attachable_access_entity_profile" "BMaaS_Fabric_AAEP" {
 }
 
 data "aci_attachable_access_entity_profile" "BMaaS_L3Out_AAEP" {
-  name  = "OTT-CORE-AAEP"
+  name = "OTT-CORE-AAEP"
 }
 
 resource "aci_aaep_to_domain" "L3Out_aaep_to_domain" {

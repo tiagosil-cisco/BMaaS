@@ -9,7 +9,12 @@ terraform {
 }
 locals {
   description = "BMaaS Demo"
+  epg_prod    = "BMaaS_PROD01"
+  epg_cimc    = "BMaaS_CIMC01"
 }
+
+
+
 
 variable "aci_username" {
   description = "EIP Username"
@@ -53,5 +58,17 @@ variable "vlans_bridge_domains" {
 }
 
 variable "l3out_subnet" {
-  description = "l3out_subnet"  
+  description = "l3out_subnet"
+}
+
+variable "physical_domain" {
+  description = "physical_domain"
+}
+
+variable "vpc_to_fi_a" {
+  description = "vpc_to_fi_a"
+}
+
+variable "vpc_to_fi_b" {
+  description = "vpc_to_fi_b"
 }

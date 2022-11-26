@@ -1,37 +1,37 @@
- resource "aci_filter" "match_all" {
-   tenant_dn = aci_tenant.tenants["BMaaS"].id
-   name      = "match_all"
- }
+resource "aci_filter" "match_all" {
+  tenant_dn = aci_tenant.tenants["BMaaS"].id
+  name      = "match_all"
+}
 
- resource "aci_filter_entry" "match_all" {
-   name        = "match_all"
-   filter_dn   = aci_filter.match_all.id
-   ether_t     = "ip"
-   stateful    = "yes"
- }
+resource "aci_filter_entry" "match_all" {
+  name      = "match_all"
+  filter_dn = aci_filter.match_all.id
+  ether_t   = "ip"
+  stateful  = "yes"
+}
 
 
 resource "aci_contract" "L3OUT" {
-  tenant_dn                 = aci_tenant.tenants["BMaaS"].id
-  name                        = "L3OUT"
-  scope = "tenant"
- }
+  tenant_dn = aci_tenant.tenants["BMaaS"].id
+  name      = "L3OUT"
+  scope     = "tenant"
+}
 
- resource "aci_contract_subject" "L3OUT_allow_all" {
-   contract_dn                  = aci_contract.L3OUT.id
-   name                         = "allow_all"
-   relation_vz_rs_subj_filt_att = [aci_filter.match_all.id]
- }
+resource "aci_contract_subject" "L3OUT_allow_all" {
+  contract_dn                  = aci_contract.L3OUT.id
+  name                         = "allow_all"
+  relation_vz_rs_subj_filt_att = [aci_filter.match_all.id]
+}
 
 resource "aci_contract" "Project01" {
-  tenant_dn                 = aci_tenant.tenants["BMaaS"].id
-  name                        = "Project01"
-  scope = "tenant"
- }
+  tenant_dn = aci_tenant.tenants["BMaaS"].id
+  name      = "Project01"
+  scope     = "tenant"
+}
 
 
- resource "aci_contract_subject" "allow_all" {
-   contract_dn                  = aci_contract.Project01.id
-   name                         = "allow_all"
-   relation_vz_rs_subj_filt_att = [aci_filter.match_all.id]
- }
+resource "aci_contract_subject" "allow_all" {
+  contract_dn                  = aci_contract.Project01.id
+  name                         = "allow_all"
+  relation_vz_rs_subj_filt_att = [aci_filter.match_all.id]
+}

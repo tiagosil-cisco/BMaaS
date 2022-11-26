@@ -1,5 +1,5 @@
 output "subnets" {
-    value = solidserver_ip_subnet.subnets
+  value = solidserver_ip_subnet.subnets
 }
 
 output "vlans_l3out" {

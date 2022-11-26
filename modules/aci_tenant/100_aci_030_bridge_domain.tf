@@ -10,9 +10,9 @@ resource "aci_bridge_domain" "bridge_domains" {
 
 
 resource "aci_subnet" "subnets" {
-    for_each             = var.bridge_domains
-    parent_dn            = aci_bridge_domain.bridge_domains[each.value.name].id
-    ip                   = "${var.subnets[each.value.name].gateway}/${var.subnets[each.value.name].prefix_size}"
-    scope                = each.value.subnet_scope
+  for_each  = var.bridge_domains
+  parent_dn = aci_bridge_domain.bridge_domains[each.value.name].id
+  ip        = "${var.subnets[each.value.name].gateway}/${var.subnets[each.value.name].prefix_size}"
+  scope     = each.value.subnet_scope
 }
 
