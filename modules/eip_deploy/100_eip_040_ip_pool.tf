@@ -1,4 +1,4 @@
-/*
+
 resource "solidserver_ip_pool" "IP_Pools" {
  for_each = var.bridge_domains
   space            = data.solidserver_ip_space.space.name
@@ -9,4 +9,3 @@ resource "solidserver_ip_pool" "IP_Pools" {
   dhcp_range = true
 }
 
-*/
